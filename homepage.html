@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoccerShoesXI Home Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:ital,wght@1,800;1,900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ------------------------------------
+           1. CSS RESET & GLOBAL STYLES
+        ------------------------------------ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff; /* Matching the clean white background of the prototype */
+            color: #1b8549; /* Primary branding green color used for general text */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* ------------------------------------
+           2. HEADER & NAVIGATION
+        ------------------------------------ */
+        header {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 24px;
+            color: #10a352; /* Vibrant branding green */
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #10a352;
+            font-weight: 500;
+            font-size: 16px;
+            transition: opacity 0.2s ease;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Right utility icons wrapper (Search, Cart, Profile) */
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Styling for the SVG utility icons to look crisp and clean */
+        .icon {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: #000000; /* Mirroring the black utility icons in the prototype */
+            stroke-width: 2;
+            cursor: pointer;
+        }
+        
+        .icon-profile {
+            fill: #10a352; /* Profile icon uses the branding green fill */
+            stroke: none;
+        }
+
+        /* ------------------------------------
+           3. HERO MAIN SECTION
+        ------------------------------------ */
+        .hero-container {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-grow: 1;
+        }
+
+        /* Left side content panel */
+        .hero-content {
+            max-width: 55%;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Recreating the signature thick, italic uppercase headers */
+        .hero-content h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-style: italic;
+            font-weight: 900;
+            font-size: 48px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            color: #10a352;
+            text-transform: uppercase;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            line-height: 1.5;
+            color: #10a352;
+            font-weight: 500;
+        }
+
+        /* Elegant text-based "Order Now" action call */
+        .order-now-btn {
+            display: inline-block;
+            margin-top: 40px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #10a352;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 1px;
+            align-self: flex-start;
+            transition: letter-spacing 0.2s ease;
+        }
+
+        .order-now-btn:hover {
+            letter-spacing: 2px;
+        }
+
+        /* Right side banner graphic panel */
+        .hero-banner {
+            max-width: 40%;
+            display: flex;
+            justify-content: flex-end;
+            padding-top: 20px;
+        }
+
+        /* Recreating the card style with its distinct soft dynamic drop shadow */
+        .brand-card-img {
+            width: 280px;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ------------------------------------
+           4. PRODUCT SHOWCASE FOOTER
+        ------------------------------------ */
+        .product-showcase {
+            width: 100%;
+            max-width: 1300px;
+            margin: 40px auto 60px auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        /* Containers to consistently isolate and scale product photography */
+        .product-card {
+            width: 100%;
+            height: 200px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            overflow: hidden;
+        }
+
+        .product-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Keeps accurate shoe profiles without stretching */
+            transition: transform 0.3s ease;
+        }
+
+        .product-card img:hover {
+            transform: scale(1.05); /* Interactive subtle zoom effect on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo-text">SoccerShoesXI</a>
+        
+        <nav class="nav-links">
+    <a href="homepage.html">Home</a>
+    <a href="products.html">Products</a> 
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="dashboard.html">Dashboard</a>
+</nav>
+
+        <div class="header-icons">
+            <svg class="icon" viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <svg class="icon" viewBox="0 0 24 24">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <svg class="icon icon-profile" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"></path>
+            </svg>
+        </div>
+    </header>
+
+    <main class="hero-container">
+        <div class="hero-content">
+            <h1>Step into greatness.<br>Welcome to Soccershoes XI.</h1>
+            <p>Engineered for control. Styled for the pitch.<br>Source the absolute best boots from around the world.</p>
+            <a href="#" class="order-now-btn">Order Now</a>
+        </div>
+
+        <div class="hero-banner">
+            <img src="logo.png" alt="SoccerShoesXI Graphic Badge" class="brand-card-img">
+        </div>
+    </main>
+
+    <section class="product-showcase">
+        <div class="product-card">
+            <img src="Nike Phantom GT Elite DF.png" alt="Nike Phantom GT Elite DF">
+        </div>
+        <div class="product-card">
+            <img src="Adidas ACE 16+ Purecontrol.png" alt="Adidas ACE 16+ Purecontrol">
+        </div>
+        <div class="product-card">
+            <img src="Nike Mercurial Superfly 10 Elite.png" alt="Nike Mercurial Superfly 10 Elite">
+        </div>
+    </section>
+
+</body>
+</html>

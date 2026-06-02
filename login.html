@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOCCERSHOES XI Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">    
+    <style>
+        /* --- 1. GLOBAL RESET & BASE LAYOUT --- */
+        * {
+            /* 'border-box' forces padding and borders to be included within the element's total width/height. */
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif; /* Clean font face matching standard modern web forms */
+        }
+
+        body {
+            height: 100vh;      /* Forces the body to exactly match 100% of the browser window's height */
+            display: flex;       /* Uses Flexbox layout to align children elements horizontally side-by-side */
+            overflow: hidden;    /* Prevents the browser from showing scrollbars */
+        }
+
+        /* The outer container holding both panels */
+        .main-container {
+            display: flex;       /* Flexbox allows the left and right panels to split the layout area */
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- 2. LEFT PANEL - CENTERED BRAND IMAGE CONFIGURATION --- */
+        .left-panel {
+            flex: 1;             /* Tells this panel to expand and take up exactly 50% of the screen space */
+            background-color: #0dcf61; /* The signature green background */
+            
+            /* FLEXBOX CENTERING: Perfectly positions logo.png in the center */
+            display: flex;
+            justify-content: center;   /* Pulls the image cleanly to the horizontal center */
+            align-items: center;       /* Pulls the image cleanly to the vertical center */
+            
+            overflow: hidden;    /* Safety guard: crops anything that tries to bleed out of this half */
+        }
+
+        /* Targets the brand image to ensure it looks neat and crisp */
+        .brand-image {
+            max-width: 185%;            
+            max-height: 185%;           
+            width: auto;               
+            height: auto;              /* Preserves the original square aspect ratio of your design */
+        }
+
+        /* --- 3. RIGHT PANEL - THE LOGIN INPUT INTERFACE --- */
+        .right-panel {
+            flex: 1;             /* Takes up the remaining 50% of the screen layout space split */
+            background-color: #fff; /* Pure white background contrasting the green side */
+            display: flex;
+            justify-content: center;   /* Centers the login form horizontally inside the white panel */
+            align-items: center;       /* Centers the login form vertically inside the white panel */
+        }
+
+        /* Wraps the actual inputs to restrict how wide the fields can span */
+        .form-container {
+            width: 100%;
+            max-width: 350px;    /* Prevents fields from stretching out too wide on large monitors */
+            padding: 20px;
+        }
+
+        .form-title {
+            font-size: 2.2rem;
+            color: #111;
+            font-weight: bold;
+        }
+
+        .form-subtitle {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 20px; /* Generates a comfortable gap before the fields start */
+        }
+
+        /* Wraps individual input blocks (Label + Input + Error message) */
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;      /* Forces the label to sit on its own line above the input box */
+            font-size: 0.7rem;
+            color: #777;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;         /* Makes the input line fill up the full width of the wrapper */
+            padding: 10px;
+            border: 1px solid #d4d8e0; /* Subtle light gray border */
+            border-radius: 4px;   /* Smooth rounded corners */
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        /* Triggers automatically when a user clicks inside an input window */
+        .form-group input:focus {
+            outline: none;       /* Disables the default thick blue browser border outline */
+            border-color: #0dcf61; /* Changes the border color to your signature green instead */
+            box-shadow: 0 0 3px rgba(13, 207, 97, 0.3); /* Adds a soft green glow effect */
+        }
+
+        /* Gives extra spacing to separate the submit button from the inputs */
+        .form-group.button-group {
+            margin-top: 25px;
+        }
+
+        /* --- 4. FORM BUTTON & DYNAMIC VALIDATION INTERFACES --- */
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 20px; /* Pill-shaped button styling */
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;     /* Shows the interactive pointing hand icon */
+            transition: all 0.3s ease; /* Creates a smooth transition animation */
+        }
+
+        /* Default enabled state styling (active when form is completely valid) */
+        #loginButton {
+            background-color: #0dcf61;
+        }
+
+        /* Changes background color to a darker tone when hovering over an active button */
+        #loginButton:hover {
+            background-color: #0bba56;
+        }
+
+        /* DISABLED STATE: Applied via JavaScript while validation checks fail */
+        #loginButton.disabled-btn {
+            background-color: #a3d8b1; /* Soft desaturated green indicating it cannot be clicked yet */
+            color: #fff;
+            cursor: not-allowed;       /* Changes pointer to a circle with a slash through it */
+            pointer-events: none;      /* Hard-locks the button, blocking clicks entirely */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* CSS PSEUDO-ELEMENT: Injecting a lock icon directly inside the disabled button */
+        #loginButton.disabled-btn::before {
+            content: '\1F512';          /* Web standard unicode representing a padlock icon */
+            margin-right: 5px;          /* Pushes the lock symbol slightly away from text */
+            opacity: 0.7;
+        }
+
+        /* Footer link positioning adjustments */
+        .form-footer {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .form-footer a {
+            display: block;             /* Places each anchor link on its own separate line */
+            text-decoration: none;      /* Removes the default underline */
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .form-footer a:hover {
+            color: #0dcf61;             /* Highlights the links green when moused over */
+            text-decoration: underline; /* Re-applies underline temporarily on hover */
+        }
+
+        /* ERROR INJECTION STYLES: Added to form-groups via JavaScript when inputs fail */
+        .form-group.invalid label {
+            color: #d93025;             /* Transforms the label text into warning red */
+        }
+
+        .form-group.invalid input {
+            border-color: #d93025;      /* Changes input window outline to warning red */
+            background-color: #ffe6e6;   /* Adds a soft red tint background color inside the box */
+        }
+
+        /* The text container sitting beneath inputs displaying specific error feedback strings */
+        .error-message {
+            color: #d93025;
+            font-size: 0.7rem;
+            margin-top: 3px;
+            display: block;
+            height: 14px; /* Fixing the height prevents the page layout from shifting when text appears */
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        
+        <div class="left-panel">
+            <img src="Untitled design.png" alt="SOCCERSHOES XI Brand Logo" class="brand-image">
+        </div>
+
+        <div class="right-panel">
+            <div class="form-container">
+                <h2 class="form-title">Login</h2>
+                <p class="form-subtitle">Sign in to continue.</p>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="name">NAME</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        <span class="error-message" id="nameError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">PASSWORD</label>
+                        <input type="password" id="password" name="password" required placeholder="••••••">
+                        <span class="error-message" id="passwordError"></span>
+                    </div>
+
+                    <div class="form-group button-group">
+                        <button type="submit" id="loginButton" class="disabled-btn" disabled>LOGIN</button>
+                    </div>
+                </form>
+
+                <div class="form-footer">
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                    <div class="signup-link">
+                        <a href="signup.html">Signup!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Delays script compilation until the browser structures all HTML elements safely
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Query and cache all interactive hooks into constant references
+            const loginForm = document.getElementById('loginForm');
+            const nameInput = document.getElementById('name');
+            const passwordInput = document.getElementById('password');
+            const nameError = document.getElementById('nameError');
+            const passwordError = document.getElementById('passwordError');
+            const loginButton = document.getElementById('loginButton');
+
+            /**
+             * UTILITY FUNCTION: Adds or clears layout UI states depending on field validity.
+             */
+            const setValidationUI = (input, errorSpan, isValid, message = '') => {
+                const formGroup = input.parentElement; // Grabs the '.form-group' parent wrapper
+                
+                if (isValid) {
+                    formGroup.classList.remove('invalid');
+                    errorSpan.textContent = '';
+                } else {
+                    formGroup.classList.add('invalid');
+                    errorSpan.textContent = message;
+                }
+            };
+
+            /**
+             * MAIN EVALUATION MODULE: Evaluates rules in real-time and toggles the button state.
+             */
+            const validateForm = () => {
+                let isNameValid = false;
+                let isPasswordValid = false;
+
+                // --- CHECK RULE 1: NAME INPUT CANNOT BE BLANK ---
+                if (nameInput.value.trim() !== '') {
+                    isNameValid = true;
+                    setValidationUI(nameInput, nameError, true);
+                } else {
+                    isNameValid = false;
+                    setValidationUI(nameInput, nameError, false, 'Name is required.');
+                }
+
+                // --- CHECK RULE 2: PASSWORD MUST SPAN AT LEAST 8 CHARACTERS ---
+                if (passwordInput.value.length >= 8) {
+                    isPasswordValid = true;
+                    setValidationUI(passwordInput, passwordError, true);
+                } else {
+                    isPasswordValid = false;
+                    setValidationUI(passwordInput, passwordError, false, 'Password must be at least 8 characters.');
+                }
+
+                // --- GATEKEEPER CONDITION: TOGGLE SUBMIT ACTION GATEWAYS ---
+                if (isNameValid && isPasswordValid) {
+                    loginButton.disabled = false;
+                    loginButton.classList.remove('disabled-btn'); // Re-applies active green color
+                } else {
+                    loginButton.disabled = true;
+                    loginButton.classList.add('disabled-btn'); // Restores desaturated green with lock
+                }
+            };
+
+            // LIVE MONITOR LISTENERS: Fires validation whenever a user inputs data
+            nameInput.addEventListener('input', validateForm);
+            passwordInput.addEventListener('input', validateForm);
+
+            // RUN AT BOOT: Establishes a baseline secure configuration right away
+            validateForm();
+
+            // SUBMIT LOGIC CONTROL: Intercepts form submission to handle validation and routing
+            loginForm.addEventListener('submit', function(e) {
+                if (loginButton.disabled) {
+                    // Fallback block if submit events sneak past the UI configuration
+                    e.preventDefault(); 
+                } else {
+                    // Prevent default form processing to allow a direct window relocation route
+                    e.preventDefault(); 
+                    
+                    // Directly sends user to your homepage file
+                    window.location.href = "homepage.html"; 
+                }
+            });
+        });
+    </script>
+</body>
+</html>

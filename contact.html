@@ -1,0 +1,346 @@
+<!-- 
+  ========================================================================
+  PROJECT: SoccerShoes XI Storefront - "Contact Us" Module
+  BRAND ARCHITECTURE: Black, White, & Vibrant Green Colorway (#10b981)
+  TYPOGRAPHY RULES: Montserrat Geometric Sans-Serif System (Global)
+  ========================================================================
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | SoccerShoes XI</title>
+    
+    <!-- Google Fonts: Montserrat Integration -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- BRAND COLOR ENGINE (:ROOT VARIABLES) --- */
+        :root {
+            --brand-green: #10b981; /* Logo Background Green */
+            --pitch-black: #111111; /* Logo Text & Graphics Black */
+            --clean-white: #ffffff;
+            --light-gray: #f4f4f5;
+            --text-dark: #1f2937;
+            --border-gray: #e4e4e7;
+        }
+
+        /* --- CSS RESET & BASE TYPOGRAPHY LAYOUT --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            color: var(--text-dark);
+            background-color: var(--clean-white);
+            line-height: 1.6;
+        }
+
+        /* --- GLOBAL WRAPPER UTILITY --- */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        /* --- TOP NAVIGATION BAR --- */
+        .back-home-nav {
+            background-color: var(--pitch-black);
+            padding: 15px 0;
+            border-bottom: 1px solid #27272a;
+            display: flex;
+        }
+
+        .back-btn {
+            color: var(--clean-white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 16px;
+            border: 1px solid var(--brand-green);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: var(--brand-green);
+            color: var(--pitch-black);
+            transform: translateX(4px);
+        }
+
+        /* --- HERO HEADER SECTION --- */
+        .contact-hero {
+            background-color: var(--pitch-black);
+            color: var(--clean-white);
+            text-align: center;
+            padding: 50px 20px;
+            border-bottom: 5px solid var(--brand-green);
+        }
+
+        .brand-logo-img {
+            max-width: 130px;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 12px;
+        }
+
+        .contact-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .contact-hero h1 span {
+            color: var(--brand-green);
+        }
+
+        .contact-hero p {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #a1a1aa;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- CONTACT INTERFACE SPLIT GRID --- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 50px;
+            margin-top: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr 1.2fr; /* Info cards on left, Form channel on right */
+            }
+        }
+
+        /* --- LEFT COLUMN: INFO CARDS --- */
+        .info-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .info-card {
+            background-color: var(--light-gray);
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 5px solid var(--pitch-black);
+            transition: border-color 0.3s ease;
+        }
+
+        .info-card:hover {
+            border-left-color: var(--brand-green);
+        }
+
+        .info-card h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: var(--pitch-black);
+            letter-spacing: 0.5px;
+        }
+
+        .info-card p {
+            font-weight: 500;
+            color: #4b5563;
+        }
+
+        .info-card a {
+            color: var(--pitch-black);
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .info-card a:hover {
+            color: var(--brand-green);
+        }
+
+        /* --- RIGHT COLUMN: INTERACTIVE FORM --- */
+        .form-container {
+            background-color: var(--clean-white);
+            padding: 40px;
+            border: 2px solid var(--border-gray);
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-container h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            color: var(--pitch-black);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            color: var(--pitch-black);
+            letter-spacing: 0.5px;
+        }
+
+        /* Custom inputs matching modern athletic digital storefront specs */
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            background-color: var(--light-gray);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Form input focusing effect */
+        .form-group input:focus, 
+        .form-group textarea:focus {
+            border-color: var(--brand-green);
+            background-color: var(--clean-white);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--pitch-black);
+            color: var(--clean-white);
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid var(--pitch-black);
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--brand-green);
+            border-color: var(--brand-green);
+            color: var(--pitch-black);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Top Utility Navigation Bar -->
+    <nav class="back-home-nav">
+        <div class="container" style="padding: 0;">
+            <a href="homepage.html" class="back-btn">← Back to Homepage</a>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Header Section -->
+    <header class="contact-hero">
+        <a href="index.html">
+            <img src="logo.png" alt="SoccerShoes XI Logo" class="brand-logo-img">
+        </a>
+        <h1>GET IN <span>TOUCH</span></h1>
+        <p>Connect with the Global Squad</p>
+    </header>
+
+    <!-- 3. Core Contact Grid Framework -->
+    <main class="container">
+        <div class="contact-grid">
+            
+            <!-- Left Information Sidebar -->
+            <section class="info-sidebar">
+                
+                <!-- Card Block: Global Support (ATW) -->
+                <div class="info-card">
+                    <h3>ATW Customer Support</h3>
+                    <p>Have logistics questions regarding an international boot shipment? Hit us up via email or check our tracking portals.</p>
+                    <p style="margin-top: 10px;">
+                        <strong>Email:</strong> <a href="mailto:support@soccershoesxi.com">support@soccershoesxi.com</a>
+                    </p>
+                </div>
+
+                <!-- Card Block: Squad Headquarters -->
+                <div class="info-card">
+                    <h3>Squad Headquarters</h3>
+                    <p>SoccerShoes XI Digital Distribution Hub</p>
+                    <p>11 Pitch-Side Avenue, Suite 100</p>
+                    <p>London, UK</p>
+                </div>
+
+                <!-- Card Block: Response Windows -->
+                <div class="info-card">
+                    <h3>Operational Hours</h3>
+                    <p>Monday – Friday: 9:00 AM – 6:00 PM (GMT)</p>
+                    <p>Saturday: 10:00 AM – 2:00 PM (GMT)</p>
+                    <p style="margin-top: 5px; font-size: 0.85rem; font-style: italic;">*Pitch managers monitor urgent elite inquiries 24/7.</p>
+                </div>
+
+            </section>
+
+            <!-- Right Interactive Communication Form Component -->
+            <section class="form-container">
+                <h2>Send a Message</h2>
+                
+                <!-- 
+                  For students or backend expansion:
+                  Change method to "POST" and action to "contact_process.php" when testing server-side scripts.
+                -->
+                <form action="#" method="GET">
+                    
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Enter your name..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Inquiry Type</label>
+                        <input type="text" id="subject" name="subject" placeholder="e.g., ATW Delivery, Sizing Help, XI Customs" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <!-- rows constraint configures pristine layout viewport sizing without breaking form margins -->
+                        <textarea id="message" name="message" rows="5" placeholder="Type your pitch notes here..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Transmit Message</button>
+
+                </form>
+            </section>
+
+        </div>
+    </main>
+
+</body>
+</html>
