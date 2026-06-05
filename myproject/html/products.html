@@ -1,0 +1,141 @@
+<?php 
+// 1. Initialize user session memory tracking
+session_start(); 
+
+// 2. Import database connector configurations
+include('test_db.php');
+
+// 3. Fetch all available boot inventory models sorted by ID
+$sql = "SELECT * FROM products ORDER BY id ASC";
+$result = mysqli_query($conn, $sql);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOCCERSHOES XI - Products</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Import block pulling the custom 'Montserrat' Google sans-serif font family */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+        /* Enforce Montserrat as the global default font for body text elements */
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen overflow-x-hidden">
+
+    <div class="flex min-h-screen">
+        
+        <!-- ================= LEFT SIDEBAR ================= -->
+        <!-- Preserved original sidebar canvas size mapping with dynamic image backgrounds -->
+        <aside class="w-[24%] bg-[#00B965] relative select-none shrink-0" 
+               style="background-image: url('Untitled design.png'); background-size: 370%; background-position: center 54%; background-repeat: no-repeat;">
+            <!-- Content elements are cleanly embedded straight inside your design asset background -->
+        </aside>
+
+        <!-- ================= MAIN FRONT PANEL STOREFRONT ================= -->
+        <main class="flex-1 flex flex-col px-12 pt-8 pb-12">
+            
+            <!-- Dynamic Navigation bar header system -->
+            <nav class="flex items-center justify-between w-full mb-14">
+                <div class="flex items-center space-x-12 text-2xl font-bold tracking-wide text-[#00B965]/70">
+                    <a href="../php/homepage.php" class="hover:text-[#00B965] transition-colors">Home</a>
+                    <a href="../php/products.php" class="text-[#00B965] font-extrabold border-b-[3px] border-[#00B965] pb-0.5">Products</a>
+                    <a href="../php/about.php" class="hover:text-[#00B965] transition-colors">About</a>
+                    <a href="../php/contact.php" class="hover:text-[#00B965] transition-colors">Contact</a>
+                    
+                    <!-- Conditional routing based on the state of global authentication sessions -->
+                    <?php if (isset($_SESSION['username'])): ?>
+                        <a href="../php/dashboard.php" class="hover:text-[#00B965] transition-colors">Dashboard</a>
+                    <?php else: ?>
+                        <a href="../html/login.html" class="hover:text-[#00B965] transition-colors">Login</a>
+                    <?php endif; ?>
+                </div>
+
+                <div class="flex items-center space-x-6 text-black">
+                    <button class="p-1 hover:opacity-70 transition-opacity">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.604 10.604z" />
+                        </svg>
+                    </button>
+                    <button class="p-1 hover:opacity-70 transition-opacity">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-7 h-7">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.116 60.116 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                        </svg>
+                    </button>
+                    <a href="<?php echo isset($_SESSION['username']) ? 'dashboard.php' : 'login.html'; ?>">
+                        <div class="w-8 h-8 rounded-full bg-[#00B965] flex items-center justify-center text-white cursor-pointer hover:opacity-90 transition-opacity">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                                <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+            </nav>
+
+            <!-- ================= DYNAMIC PRODUCT LOOP GRID ================= -->
+            <!-- The circles are scaled down to w-40 h-40 to fit all items perfectly across rows of 3 -->
+            <div class="grid grid-cols-3 gap-x-8 gap-y-12 items-center justify-items-center max-w-6xl mx-auto w-full mt-4">
+                
+                <?php 
+                if (mysqli_num_rows($result) > 0) {
+                    while($row = mysqli_fetch_assoc($result)) {
+                        
+                        // Parse price float into separate Dollar and Cents components
+                        $priceParts = explode('.', sprintf('%01.2f', $row['price']));
+                        $dollars = $priceParts[0];
+                        $cents = $priceParts[1];
+                        
+                        // Apply specialized class scaling modifications depending on brand profiles
+                        $imageName = $row['image'];
+                        $customImageStyles = "w-full h-full object-contain scale-[1.15]"; // Safe default configuration
+                        
+                        if (strpos($imageName, 'Puma Future Z 4.4 MG') !== false) {
+                            $customImageStyles = "w-full h-full object-cover scale-[1.3] object-left";
+                        } elseif (strpos($imageName, 'Nike Mercurial Vapor 16 Elite') !== false) {
+                            $customImageStyles = "w-full h-full object-cover scale-125";
+                        } elseif (strpos($imageName, 'Adidas F50 Elite Fast Reborn') !== false) {
+                            $customImageStyles = "w-full h-full object-cover scale-110";
+                        } elseif (strpos($imageName, 'Adidas F50 Elite.png') !== false) {
+                            $customImageStyles = "w-full h-full object-cover scale-[1.3] object-bottom";
+                        } elseif (strpos($imageName, 'Nike Zoom Mercurial Vapor 15 Elite') !== false || strpos($imageName, 'Puma Future 7 Ultimate') !== false) {
+                            $customImageStyles = "w-full h-full object-cover scale-125";
+                        }
+                        ?>
+                        
+                        <div class="flex flex-col items-center group cursor-pointer w-full max-w-[260px]">
+                            <!-- Balanced circle frame adjustments (Sized to w-40 / h-40) to cleanly array 14 elements -->
+                            <div class="w-40 h-40 rounded-full overflow-hidden bg-[#F2F2F2] flex items-center justify-center shadow-inner transition-transform group-hover:scale-105 duration-300">
+                                <img src="<?php echo htmlspecialchars($row['image']); ?>" 
+                                     alt="<?php echo htmlspecialchars($row['name']); ?>" 
+                                     class="<?php echo $customImageStyles; ?>">
+                            </div>
+                            <div class="mt-4 text-center text-sm font-semibold tracking-wide w-full px-2">
+                                <div class="text-black font-semibold truncate mb-1" title="<?php echo htmlspecialchars($row['name']); ?>">
+                                    <?php echo htmlspecialchars($row['name']); ?>
+                                </div>
+                                <div class="text-[#00B965] font-extrabold text-base">
+                                    $<?php echo $dollars; ?>.<span class="text-xs align-super font-bold"><?php echo $cents; ?></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php
+                    }
+                } else {
+                    echo "<p class='col-span-3 text-center text-gray-400 font-medium py-12'>No inventory elements located in the storefront registry.</p>";
+                }
+                // Terminate system connections safely
+                mysqli_close($conn);
+                ?>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

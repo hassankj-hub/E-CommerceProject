@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOCCERSHOES XI Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">    
+    <style>
+        /* --- 1. GLOBAL RESET & BASE LAYOUT --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            height: 100vh;      
+            display: flex;       
+            overflow: hidden;    
+        }
+
+        .main-container {
+            display: flex;       
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- 2. LEFT PANEL - CENTERED BRAND IMAGE CONFIGURATION --- */
+        .left-panel {
+            flex: 1;             
+            background-color: #0dcf61; 
+            display: flex;
+            justify-content: center;   
+            align-items: center;       
+            overflow: hidden;    
+        }
+
+        .brand-image {
+            max-width: 185%;            
+            max-height: 185%;           
+            width: auto;                
+            height: auto;               
+        }
+
+        /* --- 3. RIGHT PANEL - THE LOGIN INPUT INTERFACE --- */
+        .right-panel {
+            flex: 1;             
+            background-color: #fff; 
+            display: flex;
+            justify-content: center;   
+            align-items: center;       
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 350px;    
+            padding: 20px;
+        }
+
+        .form-title {
+            font-size: 2.2rem;
+            color: #111;
+            font-weight: bold;
+        }
+
+        .form-subtitle {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 20px; 
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;      
+            font-size: 0.7rem;
+            color: #777;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;         
+            padding: 10px;
+            border: 1px solid #d4d8e0; 
+            border-radius: 4px;   
+            font-size: 0.95rem;
+            color: #333;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;       
+            border-color: #0dcf61; 
+            box-shadow: 0 0 3px rgba(13, 207, 97, 0.3); 
+        }
+
+        .form-group.button-group {
+            margin-top: 25px;
+        }
+
+        /* --- 4. FORM BUTTON & DYNAMIC VALIDATION INTERFACES --- */
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 20px; 
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;     
+            transition: all 0.3s ease; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #loginButton {
+            background-color: #0dcf61;
+        }
+
+        #loginButton:hover {
+            background-color: #0bba56;
+        }
+
+        #loginButton.disabled-btn {
+            background-color: #a3d8b1; 
+            color: #fff;
+            cursor: not-allowed;       
+            pointer-events: none;      
+        }
+
+        #loginButton.disabled-btn::before {
+            content: '\1F512';          
+            margin-right: 6px;          
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .form-footer a {
+            display: block;             
+            text-decoration: none;      
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .form-footer a:hover {
+            color: #0dcf61;             
+            text-decoration: underline; 
+        }
+
+        .form-group.invalid label {
+            color: #d93025;             
+        }
+
+        .form-group.invalid input {
+            border-color: #d93025;      
+            background-color: #ffe6e6;   
+        }
+
+        .error-message {
+            color: #d93025;
+            font-size: 0.7rem;
+            margin-top: 4px;
+            display: block;
+            height: 14px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        
+        <div class="left-panel">
+            <img src="../images/Untitled design.png" alt="SOCCERSHOES XI Brand Logo" class="brand-image">
+        </div>
+
+        <div class="right-panel">
+            <div class="form-container">
+                <h2 class="form-title">Login</h2>
+                <p class="form-subtitle">Sign in to continue.</p>
+                
+                <form id="loginForm" action="../php/login_process.php" method="POST">
+                    
+                    <div class="form-group">
+                        <label for="username_or_email">USERNAME OR EMAIL</label>
+                        <input type="text" id="username_or_email" name="username_or_email" required placeholder="Enter username or email address">
+                        <span class="error-message" id="nameError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">PASSWORD</label>
+                        <input type="password" id="password" name="password" required placeholder="••••••">
+                        <span class="error-message" id="passwordError"></span>
+                    </div>
+
+                    <div class="form-group button-group">
+                        <button type="submit" id="loginButton" class="disabled-btn" disabled>LOGIN</button>
+                    </div>
+                </form>
+
+                <div class="form-footer">
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                    <div class="signup-link">
+                        <a href="../html/signup.html">Signup!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const loginForm = document.getElementById('loginForm');
+            const nameInput = document.getElementById('username_or_email'); 
+            const passwordInput = document.getElementById('password');
+            const nameError = document.getElementById('nameError');
+            const passwordError = document.getElementById('passwordError');
+            const loginButton = document.getElementById('loginButton');
+
+            // Track whether fields have been interacted with to prevent immediate error alerts
+            let nameTouched = false;
+            let passwordTouched = false;
+
+            const setValidationUI = (input, errorSpan, isValid, message = '', showError = true) => {
+                const formGroup = input.parentElement; 
+                
+                if (isValid) {
+                    formGroup.classList.remove('invalid');
+                    errorSpan.textContent = '';
+                } else if (showError) {
+                    formGroup.classList.add('invalid');
+                    errorSpan.textContent = message;
+                }
+            };
+
+            const validateForm = (checkNameError = false, checkPasswordError = false) => {
+                let isNameValid = nameInput.value.trim() !== '';
+                let isPasswordValid = passwordInput.value.length >= 8;
+
+                // Handle Username/Email validation UI updating
+                if (isNameValid) {
+                    setValidationUI(nameInput, nameError, true);
+                } else {
+                    setValidationUI(nameInput, nameError, false, 'Username or email is required.', checkNameError);
+                }
+
+                // Handle Password field validation UI updating
+                if (isPasswordValid) {
+                    setValidationUI(passwordInput, passwordError, true);
+                } else {
+                    setValidationUI(passwordInput, passwordError, false, 'Password must be at least 8 characters.', checkPasswordError);
+                }
+
+                // Handle submission button locking logic states
+                if (isNameValid && isPasswordValid) {
+                    loginButton.disabled = false;
+                    loginButton.classList.remove('disabled-btn'); 
+                } else {
+                    loginButton.disabled = true;
+                    loginButton.classList.add('disabled-btn'); 
+                }
+            };
+
+            // Event Listeners for typing inputs
+            nameInput.addEventListener('input', function() {
+                nameTouched = true;
+                validateForm(nameTouched, passwordTouched);
+            });
+
+            passwordInput.addEventListener('input', function() {
+                passwordTouched = true;
+                validateForm(nameTouched, passwordTouched);
+            });
+
+            // Focus out (blur) listeners to show error status if fields remain empty/invalid
+            nameInput.addEventListener('blur', function() {
+                if (nameInput.value.trim() === '') {
+                    nameTouched = true;
+                    validateForm(true, passwordTouched);
+                }
+            });
+
+            passwordInput.addEventListener('blur', function() {
+                if (passwordInput.value.length < 8) {
+                    passwordTouched = true;
+                    validateForm(nameTouched, true);
+                }
+            });
+
+            // Initialization load run keeping the button secured
+            validateForm(false, false);
+
+            loginForm.addEventListener('submit', function(e) {
+                if (loginButton.disabled) {
+                    e.preventDefault(); 
+                }
+            });
+        });
+    </script>
+</body>
+</html>
